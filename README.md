@@ -1,3 +1,14 @@
+# Welcome
+
+Hello and welcome!
+
+This project is presented by:
+
+- **Amit Kalaf**
+- **Adi Revach**
+
+We are both 3rd year Computer Science students.
+
 # BH_Project
 
 This project simulates the motion of a small object around a massive black hole using a simple central force model. The simulation uses the Runge-Kutta 4th order (RK4) method to solve the equations of motion and visualizes:
