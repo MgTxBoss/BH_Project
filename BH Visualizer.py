@@ -1,5 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import pandas as pd
+import os
 
 # === CONSTANTS ===
 G = 6.67e-11
@@ -13,7 +15,7 @@ r0, v0, phi0 = 10.0, -0.05, 0.0      #Distance , Speed , Angle .
 Y0 = np.array([r0, v0, phi0])
 
 # === SIM PARAMETERS ===
-t0, tf, dt = 0.0, 1000.0, 0.01       # Starting time , Ending time ,  step size .
+t0, tf, dt = 0.0, 1000.0, 0.01       # Starting time , Endding time ,  step size .
 
 def central_force_rhs(t, Y):
     r, v, phi = Y
@@ -101,3 +103,48 @@ if inspiral_time is not None:
     print(f"Inspiral time to event horizon: {inspiral_time:.4f} seconds")
 else:
     print("Did not reach the event horizon within simulation time.")
+
+# === DATA COLLECTION FOR MULTIPLE L ===
+def run_simulation_for_L(L_value):
+    ts, Ys = [t0], [Y0.copy()]
+    t, Y = t0, Y0.copy()
+    while t < tf:
+        if Y[0] <= r_event_horizon:
+            break
+        # Update L in the rhs function
+        def rhs(t, Y):
+            r, v, phi = Y
+            return np.array([
+                v,
+                (L_value**2)/(m**2 * r**3) - G*M/r**2,
+                L_value/(m*r**2)
+            ])
+        Y = rk4_step(rhs, t, Y, dt)
+        t += dt
+        ts.append(t)
+        Ys.append(Y.copy())
+    Ys = np.array(Ys)
+    df = pd.DataFrame({
+        't': ts,
+        'r': Ys[:,0],
+        'v': Ys[:,1],
+        'phi': Ys[:,2]
+    })
+    return df
+
+# --- Run for L=1..10, then 20,30,...,100 ---
+L_values = list(range(1, 11)) + list(range(20, 101, 10))
+L_dfs = {}
+for L_val in L_values:
+    L_dfs[L_val] = run_simulation_for_L(L_val)
+    print(f"Simulated for L={L_val}")
+
+# === Combine all results into one DataFrame and save as a single CSV ===
+all_dfs = []
+for L_val, df in L_dfs.items():
+    df['L'] = L_val  # Add a column for L
+    all_dfs.append(df)
+combined_df = pd.concat(all_dfs, ignore_index=True)
+combined_csv_path = "all_orbits_data.csv"
+combined_df.to_csv(combined_csv_path, index=False)
+print(f"Saved all results to {combined_csv_path}")
