@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
-import os
 
 # === CONSTANTS ===
 G = 6.67e-11
@@ -15,7 +14,7 @@ r0, v0, phi0 = 10.0, -0.05, 0.0      #Distance , Speed , Angle .
 Y0 = np.array([r0, v0, phi0])
 
 # === SIM PARAMETERS ===
-t0, tf, dt = 0.0, 1000.0, 0.01       # Starting time , Endding time ,  step size .
+t0, tf, dt = 0.0, 1000.0, 0.01       # Starting time , Ending time ,  step size .
 
 def central_force_rhs(t, Y):
     r, v, phi = Y
@@ -139,12 +138,6 @@ for L_val in L_values:
     L_dfs[L_val] = run_simulation_for_L(L_val)
     print(f"Simulated for L={L_val}")
 
-# === Combine all results into one DataFrame and save as a single CSV ===
-all_dfs = []
-for L_val, df in L_dfs.items():
-    df['L'] = L_val  # Add a column for L
-    all_dfs.append(df)
-combined_df = pd.concat(all_dfs, ignore_index=True)
-combined_csv_path = "all_orbits_data.csv"
-combined_df.to_csv(combined_csv_path, index=False)
-print(f"Saved all results to {combined_csv_path}")
+# Optional: Save to CSV files
+# for L_val, df in L_dfs.items():
+#     df.to_csv(f"orbit_data_L{L_val}.csv", index=False)
