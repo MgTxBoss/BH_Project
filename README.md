@@ -1,56 +1,34 @@
-# Welcome
+# Gravitational Wave Simulation from Binary Black Hole Systems
 
-Hello and welcome!
+## Overview
+This project aims to numerically solve Einstein’s field equations to model gravitational waves (GWs) emitted by Extreme Mass-Ratio Inspirals (EMRIs)—systems where a small black hole orbits a supermassive one. Our goal is to develop a stable and accurate algorithm to simulate the inspiral, compute orbital dynamics, and generate waveforms suitable for future space-based observatories like LISA.
 
-This project is presented by:
+## Objectives
+- Develop a Runge-Kutta 4th order (RK4) solver for evolving second-order differential equations.
+- Model the motion of a small mass $m$ around a large black hole $M \gg m$.
+- Simulate orbital decay and time to merger (plunge).
+- Visualize orbital trajectories and key physical quantities.
 
-- **Amit Kalaf**
-- **Adi Revach**
-
-We are both 3rd year Computer Science students.
-
-# BH_Project
-
-This project simulates the motion of a small object around a massive black hole using a simple central force model. The simulation uses the Runge-Kutta 4th order (RK4) method to solve the equations of motion and visualizes:
-
-- The radial distance from the black hole over time
-- The orbital angle over time
-- The trajectory in the x–y plane
+## Methodology
+- **RK4 Integration:** Used for evolving geodesic and perturbed trajectories.
+- **Central Force Model:** Simulates the Newtonian limit for early validation.
+- **Python stack:** NumPy, Matplotlib, Pandas.
 
 ## Features
+- Modular codebase for testing and extending ODE solvers
+- Visualization tools for plotting $r(t)$, $\phi(t)$, and trajectories in polar and Cartesian coordinates
+- Time-to-horizon detection logic for estimating merger timelines
+- Data export to CSV for further analysis
+- Jupyter notebook for interactive exploration and visualization
 
-- Detects when the object crosses the event horizon
-- Plots the event horizon and the black hole
-- Adjustable parameters for mass, angular momentum, and initial conditions
+## Project Status (May 2025)
+- RK4-based simulation of test particle inspiral around a single black hole completed
+- Batch simulations for a range of angular momentum values ($L$) implemented
+- Results exported to a combined CSV file
+- Interactive Jupyter notebook for data analysis and visualization
+- Next steps: Add gravitational self-force (GSF) effects and waveform generation
 
-## How to Run
-
-1. Make sure you have Python and the required libraries:
-    ```sh
-    pip install numpy matplotlib
-    ```
-2. Run the simulation:
-    ```sh
-    python "BH code.py"
-    ```
-
-## Output
-
-- Three plots: radial distance vs. time, angle vs. time, and the orbit path
-- Console output indicating if/when the object reaches the event horizon
-
-## File Structure
-
-- `BH code.py` — Main simulation and plotting script
-
-## Parameters
-
-You can adjust the following parameters in the script:
-- `G` — Gravitational constant
-- `M` — Mass of the black hole
-- `L` — Angular momentum
-- `r0`, `v0`, `phi0` — Initial conditions
-
----
-
-Final project on EMRI system with 2 black holes (currently simulates one black hole).
+## Credits
+- **Students:** Amit Kalaf, Adi Revach
+- **Supervisor:** Dr. Jeremy Miller
+- **Institution:** Academic College of Engineering, Computer Science Department
