@@ -7,6 +7,7 @@ G = 6.67e-11
 M = 1e13
 m = 1.0
 L = 46.0                             #angular momentum .
+c = 1.0                              # Speed of light
 r_event_horizon = 2.0
 
 # === INITIAL CONDITIONS ===
@@ -14,14 +15,23 @@ r0, v0, phi0 = 10.0, -0.05, 0.0      #Distance , Speed , Angle .
 Y0 = np.array([r0, v0, phi0])
 
 # === SIM PARAMETERS ===
-t0, tf, dt = 0.0, 1000.0, 0.01       # Starting time , Ending time ,  step size .
+t0, tf, dt = 0.0, 1000.0, 0.01       # Starting time , Ending time , step size .
+
+def schwarzschild_trajectory(r, E=1.0, G=6.67e-11, M=1e13, L=46.0):
+    """
+    Calculate radial velocity in Schwarzschild metric .
+    r_dot = sqrt(E**2 - (1 - 2*G*M/r) * (L**2/r**2 + 1))
+    """
+    # Calculate the radial velocity based on the Schwarzschild metric
+
+    return np.sqrt(E**2 - (1 - 2*G*M / r) * (L**2 / r**2 + 1))
 
 def central_force_rhs(t, Y):
     r, v, phi = Y
     return np.array([
-        v,
-        (L**2)/(m**2 * r**3) - G*M/r**2,
-        L/(m*r**2)
+        v,                         
+        L**2 / r**3 - G*M / r**2,   # נגזרת של תנועה
+        L / (r**2)                  # נגזרת של phi
     ])
 
 def rk4_step(f, t, y, dt):
@@ -138,6 +148,3 @@ for L_val in L_values:
     L_dfs[L_val] = run_simulation_for_L(L_val)
     print(f"Simulated for L={L_val}")
 
-# Optional: Save to CSV files
-# for L_val, df in L_dfs.items():
-#     df.to_csv(f"orbit_data_L{L_val}.csv", index=False)
