@@ -1,37 +1,44 @@
-# Black Hole Trajectory Simulation – Project Overview
+# Black Hole Trajectory Visualizer
+
+A physics simulation project that visualizes particle trajectories around a black hole using the Schwarzschild metric.
 
 ## Overview
-This project numerically simulates the motion of a test particle (small black hole or star) around a supermassive black hole, focusing on the effect of angular momentum (L) on orbital stability and inspiral into the event horizon. The simulation uses a Runge-Kutta 4th order (RK4) solver and supports both Newtonian and relativistic (Schwarzschild) models. Results are visualized and compared with historical data, and the code is modular for future extensions such as gravitational self-force and waveform generation.
 
-## Objectives
-- Develop a robust RK4 solver for evolving second-order differential equations in black hole systems
-- Model the motion of a small mass $m$ around a large black hole $M \gg m$
-- Simulate orbital decay, time to event horizon, and stability as a function of angular momentum $L$
-- Visualize orbital trajectories, phase space, and key physical quantities
-- Export results to CSV for further analysis and comparison
-- Provide an interactive Jupyter notebook for exploration and visualization
-
-## Methodology
-- **RK4 Integration:** Used for evolving geodesic and perturbed trajectories
-- **Central Force Model:** Simulates both Newtonian and relativistic (Schwarzschild) limits
-- **Python stack:** NumPy, Matplotlib, Pandas
+This project simulates the motion of particles in the gravitational field of a black hole, providing visual insights into orbital mechanics near extreme gravitational environments. The simulation uses numerical integration to solve the equations of motion and generates interactive plots showing the particle's path.
 
 ## Features
-- Modular codebase for testing and extending ODE solvers
-- Visualization tools for plotting $r(t)$, $\phi(t)$, and trajectories in polar and Cartesian coordinates
-- Batch simulations for a range of angular momentum values ($L$)
-- Time-to-horizon detection logic for estimating merger timelines
-- Data export to CSV for further analysis
-- Jupyter notebook for interactive analysis, including comparison to historical CSV data
 
-## Project Status (June 2025)
-- RK4-based simulation of test particle inspiral around a single black hole completed
-- Batch simulations for a range of angular momentum values ($L$) implemented
-- Results exported to a combined CSV file (`all_orbits_data.csv`)
-- Interactive Jupyter notebook for data analysis and visualization, including comparison to historical runs
-- Next steps: Add gravitational self-force (GSF) effects and waveform generation
+- **Schwarzschild Metric Implementation**: Accurate relativistic trajectory calculations
+- **Visual Analysis**: Three-panel visualization showing:
+  - Radial distance vs. time
+  - Orbital angle evolution
+  - 2D trajectory plot with event horizon
+- **Multiple Scenarios**: Batch simulation for different angular momentum values
+- **Event Horizon Detection**: Automatic detection when particles cross the event horizon
 
-## Credits
-- **Students:** Amit Kalaf, Adi Revach
-- **Supervisor:** Dr. Jeremy Miller
-- **Institution:** SCE Academic College of Engineering, Computer Science Department
+## Physics Parameters
+
+- Gravitational constant: G = 6.67×10⁻¹¹
+- Black hole mass: M = 10¹³ kg
+- Particle mass: m = 1.0 kg
+- Speed of light: c = 1.0 (normalized units)
+- Event horizon radius: r = 2.0
+
+## Usage
+
+Run the main simulation:
+```bash
+python "BH Visualizer.py"
+```
+
+The program will generate visualizations and output the time taken for particles to reach the event horizon.
+
+## Requirements
+
+- NumPy
+- Matplotlib
+- Pandas
+
+## Output
+
+The simulation produces plots showing particle behavior around the black hole and prints inspection times for particles that fall into the black hole. 
